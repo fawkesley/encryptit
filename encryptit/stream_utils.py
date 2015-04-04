@@ -13,10 +13,10 @@ def read_bytes(f, size, exception=InsufficientBytesReadError):
     result = f.read(size)
     if len(result) != size:
         raise exception(
-            'Tried to read {} bytes, got {}'.format(size, len(result)))
+            'Tried to read {0} bytes, got {1}'.format(size, len(result)))
     return bytearray(result)
 
 
 def seek_relative(f, by):
-    assert isinstance(by, int), '{} {}'.format(by, type(by))
+    assert isinstance(by, int), '{0} {1}'.format(by, type(by))
     f.seek(by, 1)  # whence=1: current position

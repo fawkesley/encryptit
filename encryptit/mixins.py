@@ -1,4 +1,4 @@
-from collections import OrderedDict
+from .compat import OrderedDict
 
 
 class SerializeNameOctetValueMixin(object):

@@ -1,12 +1,10 @@
 import functools
 import logging
-import struct
 
-from collections import OrderedDict
-
+from .compat import OrderedDict, struct_unpack
 from .exceptions import MalformedPacketError
-from .packets import PacketType
 from .openpgp_message import PacketLocation
+from .packets import PacketType
 from .stream_utils import seek_relative, read_bytes
 
 LOG = logging.getLogger(__name__)
@@ -156,16 +154,16 @@ class OldPacketHeader(PacketHeader):
         elif length_type == 1:  # 2-octet length
             self.header_length = 3
             two_octets = read_bytes(f, 2, MalformedPacketError)
-            self.body_length = struct.unpack('H', two_octets)[0]
+            self.body_length = struct_unpack('H', two_octets)[0]
 
         elif length_type == 2:  # 4-octet length
             self.header_length = 5
             four_octets = read_bytes(f, 4, MalformedPacketError)
-            self.body_length = struct.unpack('I', four_octets)[0]
+            self.body_length = struct_unpack('I', four_octets)[0]
 
         else:
             raise NotImplementedError(
-                'Unsupported packet length type: {}, see '
+                'Unsupported packet length type: {0}, see '
                 'https://tools.ietf.org/html/rfc4880#section-4.2.1'.format(
                     length_type))
 
@@ -215,7 +213,7 @@ class NewPacketHeader(PacketHeader):
         elif first_octet == 255:         # 4.2.2.3. Five-Octet Lengths
             self.header_length = 6
             four_octets = read_bytes(f, 4, MalformedPacketError)
-            self.body_length = struct.unpack('I', four_octets)[0]
+            self.body_length = struct_unpack('I', four_octets)[0]
 
         else:
             raise NotImplementedError(

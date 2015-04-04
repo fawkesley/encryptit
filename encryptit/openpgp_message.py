@@ -1,4 +1,5 @@
-from collections import OrderedDict, namedtuple
+from .compat import OrderedDict
+from collections import namedtuple
 
 
 class OpenPGPMessage(object):
