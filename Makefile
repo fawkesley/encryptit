@@ -2,7 +2,7 @@
 test:
 	nosetests -v
 	./check-pep8.sh
-	ack TODO && false
+	./check-todo.sh
 
 .PHONY: clean
 clean:
