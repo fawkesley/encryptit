@@ -1,4 +1,6 @@
-from nose.tools import assert_equal, assert_raises, assert_is_instance
+from nose.tools import assert_equal, assert_raises
+
+from ..test_utils import assert_is_instance
 from encryptit.compat import struct_unpack
 
 # See https://docs.python.org/2/library/struct.html
