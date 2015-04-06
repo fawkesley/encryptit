@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import codecs
 import os
@@ -27,7 +27,7 @@ VERSION = find_version('encryptit', '__init__.py')
 
 setup(
     name='encryptit',
-    packages=['encryptit'],
+    packages=find_packages(),
     version=VERSION,
     description='Passphrase (symmetric) encryption & decryption using OpenPGP',
     author='Paul M Furley',
@@ -35,7 +35,7 @@ setup(
     url='https://github.com/paulfurley/encryptit',
     download_url=('https://github.com/paulfurley/encryptit/tarball/{0}'
                   .format(VERSION)),
-    install_requires=['docopt', 'pycrypto'],
+    install_requires=['docopt', 'pycrypto', 'enum34'],
     entry_points={
         'console_scripts': [
             'encryptit=encryptit.__main__:main',
