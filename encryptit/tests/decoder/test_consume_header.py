@@ -134,11 +134,11 @@ def _make_old_format_header(packet_tag, body_length):
     elif 0xFF < body_length <= 0xFFFF:
         length_type_bits = 0b00000001  # 1 means 2-octet length
         # https://docs.python.org/2/library/struct.html#format-characters
-        length_octets = struct.pack('H', body_length)
+        length_octets = struct.pack('>H', body_length)
 
     elif 0xFFFF < body_length <= 0xFFFFFFFF:
         length_type_bits = 0b00000010  # 2 means 4-octet length
-        length_octets = struct.pack('I', body_length)
+        length_octets = struct.pack('>I', body_length)
 
     else:
         raise ValueError(body_length)
@@ -169,7 +169,7 @@ def _make_new_format_header(packet_tag, body_length):
 
     elif 8383 < body_length <= 0xFFFFFFFF:  # five-octet length
         # https://tools.ietf.org/html/rfc4880#section-4.2.2.3
-        length_octets = bytearray([255]) + struct.pack('I', body_length)
+        length_octets = bytearray([255]) + struct.pack('>I', body_length)
 
     packet_first_octet = NEW_OCTET_0 | tag_bits
     return bytearray([packet_first_octet]) + length_octets

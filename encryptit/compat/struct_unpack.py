@@ -16,12 +16,14 @@ def is_version_2_6():
 
 def _unpack_v26(format_string, byte_array):
     _validate_byte_array_type(byte_array)
+    _validate_format_string(format_string)
 
     return struct.unpack(format_string, str(byte_array))
 
 
 def _unpack_v27_v3x(format_string, byte_array):
     _validate_byte_array_type(byte_array)
+    _validate_format_string(format_string)
 
     return struct.unpack(format_string, byte_array)
 
@@ -31,5 +33,16 @@ def _validate_byte_array_type(byte_array):
         raise TypeError(
             'Can only unpack from `bytearray` not: {0}'.format(
                 type(byte_array)))
+
+
+def _validate_format_string(format_string):
+    """
+    Ensure that either little endian (<) or big endian (>) is specified.
+    """
+    if not format_string.startswith('<') and not format_string.startswith('>'):
+        raise ValueError(
+            'Byte order must be specified. See '
+            'https://docs.python.org/3/library/struct.html'
+            '#byte-order-size-and-alignment')
 
 struct_unpack = _unpack_v26 if is_version_2_6() else _unpack_v27_v3x
