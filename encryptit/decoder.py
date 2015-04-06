@@ -154,12 +154,12 @@ class OldPacketHeader(PacketHeader):
         elif length_type == 1:  # 2-octet length
             self.header_length = 3
             two_octets = read_bytes(f, 2, MalformedPacketError)
-            self.body_length = struct_unpack('H', two_octets)[0]
+            self.body_length = struct_unpack('>H', two_octets)[0]
 
         elif length_type == 2:  # 4-octet length
             self.header_length = 5
             four_octets = read_bytes(f, 4, MalformedPacketError)
-            self.body_length = struct_unpack('I', four_octets)[0]
+            self.body_length = struct_unpack('>I', four_octets)[0]
 
         else:
             raise NotImplementedError(
@@ -213,7 +213,7 @@ class NewPacketHeader(PacketHeader):
         elif first_octet == 255:         # 4.2.2.3. Five-Octet Lengths
             self.header_length = 6
             four_octets = read_bytes(f, 4, MalformedPacketError)
-            self.body_length = struct_unpack('I', four_octets)[0]
+            self.body_length = struct_unpack('>I', four_octets)[0]
 
         else:
             raise NotImplementedError(

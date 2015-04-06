@@ -4,11 +4,17 @@ from encryptit.compat import struct_unpack
 # See https://docs.python.org/2/library/struct.html
 
 TESTS = [
-    # (0x01 << 24) + (0x02 << 16) + (0x03 << 8) + 0x01
+    # (0x01 << 24) + (0x02 << 16) + (0x03 << 8) + 0x04
     (bytearray([1, 2, 3, 4]), '>I', (16909060,)),
+
+    # (0x04 << 24) + (0x03 << 16) + (0x02 << 8) + 0x01
+    (bytearray([1, 2, 3, 4]), '<I', (67305985,)),
 
     # (0x01 << 8) + 0x02 and (0x03 << 8) + (0x04)
     (bytearray([1, 2, 3, 4]), '>HH', (258, 772)),
+
+    # (0x02 << 8) + (0x01) and (0x04 << 8) + 0x03
+    (bytearray([1, 2, 3, 4]), '<HH', (513, 1027)),
 
     (bytearray([1, 2, 3, 4]), '>BBBB', (1, 2, 3, 4)),
 ]
