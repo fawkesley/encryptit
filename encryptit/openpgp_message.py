@@ -34,10 +34,12 @@ class OpenPGPMessage(object):
         ])
 
 
-class PacketLocation(namedtuple('PacketLocation', 'start,length,packet_type')):
+class PacketLocation(namedtuple(
+        'PacketLocation', 'header_start,body_start,body_length,packet_type')):
     def serialize(self):
         return OrderedDict([
-            ('start', self.start),
-            ('length', self.length),
+            ('header_start', self.header_start),
+            ('body_start', self.body_start),
+            ('body_length', self.body_length),
             ('packet_type', self.packet_type),
         ])
