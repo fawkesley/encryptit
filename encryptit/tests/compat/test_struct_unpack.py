@@ -1,12 +1,16 @@
-from nose.tools import assert_equal, assert_raises
+from nose.tools import assert_equal, assert_raises, assert_is_instance
 from encryptit.compat import struct_unpack
 
 # See https://docs.python.org/2/library/struct.html
 
 TESTS = [
-    (bytearray([1, 2, 3, 4]), 'I', (67305985,)),
-    (bytearray([1, 2, 3, 4]), 'HH', (513, 1027)),
-    (bytearray([1, 2, 3, 4]), 'BBBB', (1, 2, 3, 4)),
+    # (0x01 << 24) + (0x02 << 16) + (0x03 << 8) + 0x01
+    (bytearray([1, 2, 3, 4]), '>I', (16909060,)),
+
+    # (0x01 << 8) + 0x02 and (0x03 << 8) + (0x04)
+    (bytearray([1, 2, 3, 4]), '>HH', (258, 772)),
+
+    (bytearray([1, 2, 3, 4]), '>BBBB', (1, 2, 3, 4)),
 ]
 
 
@@ -15,6 +19,9 @@ UNSUPPORTED_TYPES = [
     str,
     list
 ]
+
+ALLOWED_BYTE_ORDERS = ['<', '>']
+DISALLOWED_BYTE_ORDERS = ['@', '=', '!', '']
 
 
 def test_struct_unpack():
@@ -33,4 +40,24 @@ def test_non_bytearray_types_raise_type_error():
 
 def assert_raises_for_type(type_):
     data = type_([1, 2, 3, 4])
-    assert_raises(TypeError, lambda x: struct_unpack(data))
+    assert_raises(TypeError, lambda: struct_unpack('I', data))
+
+
+def test_disallowed_byte_order_characters():
+    for byte_order in DISALLOWED_BYTE_ORDERS:
+        yield assert_byte_order_raises_value_error, byte_order
+
+
+def assert_byte_order_raises_value_error(byte_order):
+    data = bytearray([0x01, 0x02])
+    assert_raises(ValueError, lambda: struct_unpack(byte_order + 'H', data))
+
+
+def test_allowed_byte_order_characters():
+    for byte_order in ALLOWED_BYTE_ORDERS:
+        yield assert_byte_order_is_ok, byte_order
+
+
+def assert_byte_order_is_ok(byte_order):
+    data = bytearray([0x01, 0x02])
+    assert_is_instance(struct_unpack(byte_order + 'H', data)[0], int)
