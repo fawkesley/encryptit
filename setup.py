@@ -33,6 +33,9 @@ setup(
     install_requires=[],
     packages=['encryptit'],
     entry_points={
+        'console_scripts': [
+            'encryptit=encryptit.__main__:main',
+        ],
     },
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

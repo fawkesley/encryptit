@@ -33,6 +33,29 @@ Globally (not recommended):
     sudo pip install encrypit
     ```
 
+## Dump Packets as JSON
+
+### Python API
+
+    ```python
+    from encryptit.dump_json import dump_stream
+
+    with open('encrypted.gpg', 'rb') as f:
+        print(dump_stream(f))
+    ```
+
+### Command-line
+
+    ```shell
+    $ encryptit dumpjson encrypted.gpg
+    ```
+
+### GnuPG Equivalent (ish)
+
+    ```shell
+    $ gpg --list-packets encrypted.json
+    ```
+
 ## Encrypt a File
 
 ### Python API
