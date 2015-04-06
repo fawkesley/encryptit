@@ -8,6 +8,7 @@ test:
 clean:
 	find . -iname '*.pyc' -delete
 	rm -rf openpgp.egg-info
+	rm -rf dist/ MANIFEST
 
 .PHONY: upversion
 upversion:
