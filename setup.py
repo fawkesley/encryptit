@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from distutils.core import setup
+from setuptools import setup
 
 import codecs
 import os
@@ -23,15 +23,19 @@ def find_version(*file_paths):
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
+VERSION = find_version('encryptit', '__init__.py')
+
 setup(
     name='encryptit',
-    version=find_version('encryptit', '__init__.py'),
-    description='GnuPG / PGP compatible passphrase encryption.',
+    packages=['encryptit'],
+    version=VERSION,
+    description='Passphrase (symmetric) encryption & decryption using OpenPGP',
     author='Paul M Furley',
     author_email='paul@paulfurley.com',
     url='https://github.com/paulfurley/encryptit',
-    install_requires=[],
-    packages=['encryptit'],
+    download_url=('https://github.com/paulfurley/encryptit/tarball/{0}'
+                  .format(VERSION)),
+    install_requires=['docopt', 'pycrypto'],
     entry_points={
         'console_scripts': [
             'encryptit=encryptit.__main__:main',
