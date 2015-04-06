@@ -32,4 +32,4 @@ class PacketType(SerializeNameOctetValueMixin, Enum):
     ModificationDetectionCodePacket = 19
 
     def __str__(self):
-        return '{} (tag {})'.format(self.name, self.value)
+        return '{0} (tag {0})'.format(self.name, self.value)

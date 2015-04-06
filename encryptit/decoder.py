@@ -72,9 +72,9 @@ def is_new_packet_format(packet_tag_byte):
 
 
 def is_bit_set(byte, bit):
-    assert isinstance(byte, int), 'is_bit_set takes int, not {}'.format(
+    assert isinstance(byte, int), 'is_bit_set takes int, not {0}'.format(
         type(byte))
-    assert 0 <= byte <= 255, 'byte must be 0 to 255: {}'.format(byte)
+    assert 0 <= byte <= 255, 'byte must be 0 to 255: {0}'.format(byte)
 
     bitmasks = {
         0: 0b00000001,
@@ -132,7 +132,7 @@ class OldPacketHeader(PacketHeader):
         https://tools.ietf.org/html/rfc4880#section-4.3
         """
         assert 0 <= packet_tag <= 15, (
-            'Old Format Packet supports tag up to 15: {}'.format(packet_tag))
+            'Old Format Packet supports tag up to 15: {0}'.format(packet_tag))
         try:
             self.packet_type = PacketType(packet_tag)
         except ValueError as e:
@@ -169,7 +169,7 @@ class OldPacketHeader(PacketHeader):
                     length_type))
 
     def __str__(self):
-        return 'OldPacketHeader: {}'.format(self.packet_type)
+        return 'OldPacketHeader: {0}'.format(self.packet_type)
 
 
 class NewPacketHeader(PacketHeader):
@@ -222,4 +222,4 @@ class NewPacketHeader(PacketHeader):
                 'https://tools.ietf.org/html/rfc4880#section-4.2.2')
 
     def __str__(self):
-        return 'NewPacketHeader: {}'.format(self.packet_type)
+        return 'NewPacketHeader: {0}'.format(self.packet_type)
