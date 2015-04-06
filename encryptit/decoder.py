@@ -34,8 +34,9 @@ def find_packets(f):
             break
 
         yield PacketLocation(
-            start=f.tell(),
-            length=header.body_length,
+            header_start=f.tell() - header.header_length,
+            body_start=f.tell(),
+            body_length=header.body_length,
             packet_type=header.packet_type)
 
         seek_relative(f, header.body_length)
