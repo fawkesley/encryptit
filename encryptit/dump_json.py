@@ -19,6 +19,15 @@ class OpenPGPJsonEncoder(json.JSONEncoder):
 
         return repr(obj)
 
+    def encode(self, obj):
+        # If a builtin type provides a `serialize` method, use that instead of
+        # the default serialisation, eg. namedtuple
+
+        if getattr(obj, 'serialize', None):
+            obj = obj.serialize()
+
+        return super(OpenPGPJsonEncoder, self).encode(obj)
+
     @staticmethod
     def serialize_bytes(some_bytes):
         return OrderedDict([
