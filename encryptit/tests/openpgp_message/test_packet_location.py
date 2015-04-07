@@ -23,11 +23,11 @@ def test_packet_location_body_end_field():
     assert_equal(20, PACKET_LOCATION.body_end)
 
 
-def test_packet_location_serialize():
+def test_packet_location_json_serializing():
     # convert to JSON then back again in order to compare as python objects -
     # less picky than comparing as strings.
 
-    as_json = json.dumps(PACKET_LOCATION.serialize(), cls=OpenPGPJsonEncoder)
+    as_json = json.dumps(PACKET_LOCATION, cls=OpenPGPJsonEncoder)
     back_to_data = json.loads(as_json)
 
     assert_equal(
