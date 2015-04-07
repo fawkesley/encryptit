@@ -36,8 +36,7 @@ def find_packets(f):
         yield PacketLocation(
             header_start=f.tell() - header.header_length,
             body_start=f.tell(),
-            body_length=header.body_length,
-            packet_type=header.packet_type)
+            body_length=header.body_length)
 
         seek_relative(f, header.body_length)
 
