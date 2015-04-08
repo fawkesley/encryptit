@@ -35,7 +35,7 @@ setup(
     url='https://github.com/paulfurley/encryptit',
     download_url=('https://github.com/paulfurley/encryptit/tarball/{0}'
                   .format(VERSION)),
-    install_requires=['docopt', 'pycrypto', 'enum34'],
+    install_requires=['docopt', 'pycrypto', 'enum34', 'six'],
     entry_points={
         'console_scripts': [
             'encryptit=encryptit.__main__:main',

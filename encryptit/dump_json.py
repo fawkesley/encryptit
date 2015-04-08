@@ -4,9 +4,10 @@ from .compat import OrderedDict
 from .openpgp_message import OpenPGPMessage
 
 
-def dump_stream(f, indent=4):
+def dump_stream(f, output_stream, indent=4):
     message = OpenPGPMessage.from_stream(f)
-    return json.dumps(message, indent=indent, cls=OpenPGPJsonEncoder)
+    return json.dump(message, output_stream, indent=indent,
+                     cls=OpenPGPJsonEncoder)
 
 
 class OpenPGPJsonEncoder(json.JSONEncoder):
