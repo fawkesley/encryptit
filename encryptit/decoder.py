@@ -43,9 +43,9 @@ def find_packets(f):
 
 def consume_header(f):
     """
-    Decode the header from the given stream and return a `NewPacketHeader` or
-    `OldPacketHeader`, leaving the file handle pointing immediately after
-    the header.
+    Decode the header from the given stream and return a
+    `NewFormatPacketHeader` or `OldFormatPacketHeader`, leaving the file handle
+    pointing immediately after the header.
     """
 
     try:
@@ -56,9 +56,9 @@ def consume_header(f):
     seek_relative(f, -1)  # rewind!
 
     if is_new_packet_format(packet_tag):
-        header = NewPacketHeader(f)
+        header = NewFormatPacketHeader(f)
     else:
-        header = OldPacketHeader(f)
+        header = OldFormatPacketHeader(f)
 
     return header
 
@@ -89,7 +89,7 @@ def is_bit_set(byte, bit):
     return (byte & mask) != 0
 
 
-class PacketHeader(object):
+class GenericPacketHeader(object):
     def __init__(self, f):
         self.header_length = None
         self.body_length = None
@@ -105,7 +105,7 @@ class PacketHeader(object):
         ])
 
 
-class OldPacketHeader(PacketHeader):
+class OldFormatPacketHeader(GenericPacketHeader):
     """
     4.2. Packet Headers - Old Format
     https://tools.ietf.org/html/rfc4880#section-4.2
@@ -168,10 +168,10 @@ class OldPacketHeader(PacketHeader):
                     length_type))
 
     def __str__(self):
-        return 'OldPacketHeader: {0}'.format(self.packet_type)
+        return 'OldFormatPacketHeader: {0}'.format(self.packet_type)
 
 
-class NewPacketHeader(PacketHeader):
+class NewFormatPacketHeader(GenericPacketHeader):
     packet_format = 'new'
 
     def __init__(self, f):
@@ -221,4 +221,4 @@ class NewPacketHeader(PacketHeader):
                 'https://tools.ietf.org/html/rfc4880#section-4.2.2')
 
     def __str__(self):
-        return 'NewPacketHeader: {0}'.format(self.packet_type)
+        return 'NewFormatPacketHeader: {0}'.format(self.packet_type)
