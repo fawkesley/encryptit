@@ -2,7 +2,7 @@ import json
 
 from nose.tools import assert_equal, assert_not_equal
 
-from encryptit.openpgp_message import PacketLocation
+from encryptit.packet_location import PacketLocation
 from encryptit.dump_json import OpenPGPJsonEncoder
 
 PACKET_LOCATION_1 = PacketLocation(

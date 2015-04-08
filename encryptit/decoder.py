@@ -3,7 +3,7 @@ import logging
 
 from .compat import OrderedDict, struct_unpack
 from .exceptions import MalformedPacketError
-from .openpgp_message import PacketLocation
+from .packet_location import PacketLocation
 from .packets import PacketType
 from .stream_utils import seek_relative, read_bytes
 
