@@ -38,10 +38,11 @@ Globally (not recommended):
 ### Python API
 
     ```python
+    import sys
     from encryptit.dump_json import dump_stream
 
     with open('encrypted.gpg', 'rb') as f:
-        print(dump_stream(f))
+        dump_stream(f, sys.stdout)
     ```
 
 ### Command-line
