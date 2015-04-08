@@ -1,5 +1,6 @@
 from .compat import OrderedDict
 from .decoder import find_packets
+from .openpgp_packet import OpenPGPPacket
 
 
 class OpenPGPMessage(object):
@@ -19,15 +20,21 @@ class OpenPGPMessage(object):
             print(f.serialize())  # f still in use
         ```
         """
-        return cls(packet_locations=find_packets(f))
+        return cls(f, packet_locations=find_packets(f))
 
-    def __init__(self, packet_locations=None):
+    def __init__(self, f, packet_locations=None):
         assert packet_locations is None or \
             isinstance(packet_locations, list), type(packet_locations)
 
+        self.f = f
         self.packet_locations = packet_locations
 
     def serialize(self):
         return OrderedDict([
-            ('packet_locations', self.packet_locations),
+            ('packets', self.packets),
         ])
+
+    @property
+    def packets(self):
+        return [OpenPGPPacket.from_stream(self.f, pl)
+                for pl in self.packet_locations]

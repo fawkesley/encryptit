@@ -3,7 +3,8 @@ import logging
 
 from .exceptions import MalformedPacketError
 from .packet_location import PacketLocation
-from .packets import OldFormatPacketHeader, NewFormatPacketHeader
+from .packets import (get_packet_body_class, OldFormatPacketHeader,
+                      NewFormatPacketHeader)
 from .stream_utils import seek_relative, read_bytes
 
 LOG = logging.getLogger(__name__)
@@ -60,6 +61,11 @@ def consume_header(f):
         header = OldFormatPacketHeader(f)
 
     return header
+
+
+def decode_body(f, start, length, packet_type):
+    cls = get_packet_body_class(packet_type)
+    return cls.from_stream(f, start, length)
 
 
 def is_new_packet_format(packet_tag_byte):
