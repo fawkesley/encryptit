@@ -10,6 +10,9 @@ from .stream_utils import seek_relative, read_bytes
 LOG = logging.getLogger(__name__)
 
 
+__all__ = ['find_packets', 'consume_header', 'decode_body']
+
+
 class NoMoreData(StopIteration):
     pass
 
