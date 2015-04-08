@@ -17,7 +17,7 @@ class OpenPGPJsonEncoder(json.JSONEncoder):
         if getattr(obj, 'serialize', None):
             return obj.serialize()
 
-        return repr(obj)
+        return super(OpenPGPJsonEncoder, self).default(obj)
 
     def encode(self, obj):
         # If a builtin type provides a `serialize` method, use that instead of
