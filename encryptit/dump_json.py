@@ -12,7 +12,7 @@ def dump_stream(f, output_stream, indent=4):
 
 class OpenPGPJsonEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, bytes):
+        if isinstance(obj, bytearray):
             return self.serialize_bytes(obj)
 
         if getattr(obj, 'serialize', None):
@@ -32,7 +32,7 @@ class OpenPGPJsonEncoder(json.JSONEncoder):
     @staticmethod
     def serialize_bytes(some_bytes):
         return OrderedDict([
-            ('octets', ':'.join(['{:02x}'.format(byte)
+            ('octets', ':'.join(['{0:02x}'.format(byte)
                                  for byte in some_bytes])),
             ('length', len(some_bytes)),
         ])
