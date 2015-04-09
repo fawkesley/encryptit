@@ -5,6 +5,7 @@ from six import StringIO
 from encryptit.dump_json import dump_stream
 
 from ..sample_files import SAMPLE_DIR, SAMPLE_FILES
+from ..test_utils import assert_is_instance
 
 
 def test_dump_stream_produces_valid_json():
@@ -19,4 +20,4 @@ def assert_produces_valid_json(filename):
         json_stream.seek(0)
         json_string = json_stream.read()
 
-    assert isinstance(json.loads(json_string), dict)
+    assert_is_instance(json.loads(json_string), dict)
