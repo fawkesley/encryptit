@@ -5,7 +5,7 @@ from nose.tools import assert_equal
 from ..sample_files import SAMPLE_FILES, SAMPLE_DIR
 
 from encryptit.decoder import find_packets
-from encryptit.openpgp_message import PacketLocation
+from encryptit.packet_location import PacketLocation
 
 
 EXPECTED_LOCATIONS = {

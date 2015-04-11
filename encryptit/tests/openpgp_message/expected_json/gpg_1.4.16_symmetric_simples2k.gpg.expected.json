@@ -1,0 +1,56 @@
+{
+  "packets": [
+    {
+      "location": {
+        "header_start": 0,
+        "header_length": 2,
+        "header_end": 2,
+        "body_start": 2,
+        "body_length": 4,
+        "body_end": 6
+      },
+      "header": {
+        "packet_type": {
+          "name": "SymmetricKeyEncryptedSessionKeyPacket",
+          "octet_value": 3
+        },
+        "packet_format": "old",
+        "header_length": 2,
+        "body_length": 4
+      },
+      "body": {
+        "raw": {
+          "octets": "04:09:00:02",
+          "length": 4
+        },
+        "decoded": null
+      }
+    },
+    {
+      "location": {
+        "header_start": 6,
+        "header_length": 2,
+        "header_end": 8,
+        "body_start": 8,
+        "body_length": 59,
+        "body_end": 67
+      },
+      "header": {
+        "packet_type": {
+          "name": "SymmetricEncryptedandIntegrityProtectedDataPacket",
+          "octet_value": 18
+        },
+        "packet_format": "new",
+        "header_length": 2,
+        "body_length": 59
+      },
+      "body": {
+        "raw": {
+          "octets": "01:0b:1e:cf:86:33:08:fd:66:9a:f0:be:48:62:a4:a5:42:4f:d8:20:fe:16:e4:4c:db:80:89:ee:34:72:ef:52:36:70:15:01:82:d5:0e:eb:61:ba:e7:71:4a:8c:22:6a:9c:79:8f:e3:da:31:fc:ad:14:eb:8a",
+          "length": 59
+        },
+        "decoded": null
+      }
+    }
+  ]
+}
