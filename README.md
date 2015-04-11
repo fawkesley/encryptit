@@ -1,6 +1,7 @@
 # EncryptIt
 
 [![Build Status](https://travis-ci.org/paulfurley/encryptit.svg?branch=master)](https://travis-ci.org/paulfurley/encryptit)
+[![Coverage Status](https://coveralls.io/repos/paulfurley/encryptit/badge.svg)](https://coveralls.io/r/paulfurley/encryptit)
 
 ## OpenPGP API and CLI for Python
 
