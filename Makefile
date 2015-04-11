@@ -1,6 +1,6 @@
 .PHONY: test
 test: clean
-	python setup.py test
+	coverage run --source=encryptit setup.py test
 	./check-pep8.sh
 	./check-todo.sh
 
@@ -10,6 +10,7 @@ clean:
 	find . -name __pycache__ -type d -delete
 	rm -rf openpgp.egg-info
 	rm -rf dist/ MANIFEST
+	rm -f .coverage
 
 .PHONY: upversion
 upversion:
