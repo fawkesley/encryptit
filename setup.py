@@ -25,6 +25,18 @@ def find_version(*file_paths):
 
 VERSION = find_version('encryptit', '__init__.py')
 
+
+def get_install_requires():
+    dependencies = ['docopt', 'pycrypto', 'six']
+    try:
+
+        from enum import Enum
+        Enum  # Prevent unused PEP8 error
+    except ImportError:
+        dependencies.append('enum34')
+
+    return dependencies
+
 setup(
     name='encryptit',
     packages=find_packages(),
@@ -35,7 +47,7 @@ setup(
     url='https://github.com/paulfurley/encryptit',
     download_url=('https://github.com/paulfurley/encryptit/tarball/{0}'
                   .format(VERSION)),
-    install_requires=['docopt', 'pycrypto', 'enum34', 'six'],
+    install_requires=get_install_requires(),
     entry_points={
         'console_scripts': [
             'encryptit=encryptit.__main__:main',
