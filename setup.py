@@ -29,7 +29,7 @@ setup(
     name='encryptit',
     packages=find_packages(),
     version=VERSION,
-    description='Passphrase (symmetric) encryption & decryption using OpenPGP',
+    description='OpenPGP API and CLI focusing on testing & clarity.',
     author='Paul M Furley',
     author_email='paul@paulfurley.com',
     url='https://github.com/paulfurley/encryptit',
