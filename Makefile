@@ -1,8 +1,8 @@
 .PHONY: test
 test: clean
 	coverage run --source=encryptit setup.py test
-	./check-pep8.sh
-	./check-todo.sh
+	./script/check-pep8.sh
+	./script/check-todo.sh
 
 .PHONY: clean
 clean:
