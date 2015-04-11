@@ -29,7 +29,12 @@ VERSION = find_version('encryptit', '__init__.py')
 def get_install_requires():
     dependencies = ['docopt', 'pycrypto', 'six']
     try:
+        from collections import OrderedDict  # Python 2.6 doesn't have it.
+        OrderedDict  # To prevent unused PEP8 error :)
+    except ImportError:
+        dependencies.append('ordereddict')
 
+    try:
         from enum import Enum
         Enum  # Prevent unused PEP8 error
     except ImportError:
