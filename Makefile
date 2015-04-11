@@ -1,6 +1,6 @@
 .PHONY: test
 test: clean
-	nosetests -v
+	python setup.py test
 	./check-pep8.sh
 	./check-todo.sh
 

@@ -41,6 +41,7 @@ setup(
             'encryptit=encryptit.__main__:main',
         ],
     },
+    test_suite='nose.collector',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Console',
