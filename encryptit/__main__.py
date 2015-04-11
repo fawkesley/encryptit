@@ -19,7 +19,11 @@ from docopt import docopt
 from .cli import dump_json
 
 
-def main():
+def main(args=None):
+    if args is None:
+        import sys
+        args = sys.argv[1:]
+
     from .__init__ import __version__
 
     version_string = (
@@ -31,6 +35,6 @@ def main():
         'There is NO WARRANTY, to the extend permitted by law.').format(
             __version__)
 
-    arguments = docopt(__doc__, version=version_string)
+    arguments = docopt(__doc__, version=version_string, argv=args)
     if arguments['dumpjson'] is True:
-        dump_json(arguments['<file.gpg>'])
+        return dump_json(arguments['<file.gpg>'])
