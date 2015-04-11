@@ -5,3 +5,4 @@ flake8==2.4.0
 pep8==1.5.7
 pyflakes==0.8.1
 coveralls==0.5
+mock==1.0.1
