@@ -1,13 +1,15 @@
 from abc import ABCMeta, abstractproperty, abstractmethod
 
+from six import add_metaclass
+
 from ..compat import abstractclassmethod
 
 
+@add_metaclass(ABCMeta)
 class BasePacketBody(object):
-    __metaclass__ = ABCMeta
 
     @abstractclassmethod
-    def from_stream(self, f, body_start, body_length):
+    def from_stream(cls, f, body_start, body_length):
         pass
 
     @abstractproperty
