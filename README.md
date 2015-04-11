@@ -2,139 +2,45 @@
 
 [![Build Status](https://travis-ci.org/paulfurley/encryptit.svg?branch=master)](https://travis-ci.org/paulfurley/encryptit)
 
-## OpenPGP Passphrase Encryption
+## OpenPGP API and CLI for Python
 
-EncryptIt is a PGP and GnuPG compatible encryption command-line tool and Python
-library for strongly encrypting and decrypting files with passphrases.
+EncryptIt an [OpenPGP (RFC 4880)](https://tools.ietf.org/html/rfc4880) API and
+CLI for Python, focusing on **testing and clarity**.
 
-This is minimal subset of RFC 4880 (OpenPGP) supporting only **symmetric
-(passphrase) encryption**.
+- *Currently* it provides a debugging tool, `encryptit dumpjson` which converts
+OpenPGP binary messages into extremely verbose JSON. As decoders for individual [packet
+types](https://tools.ietf.org/html/rfc4880#section-5) are added, the `dumpjson`
+tool will become even more powerful.
 
-The focus is on **testing**, **clean code** and **compatibility**.
+- *Next* it will provide an API and CLI for **symmetrically encrypting and
+decrypting files** using a passphrase.
+
+- *Eventually* (and depending how it goes) we'll tackle **asymmetric (public / private key) encryption.**
+
+See [milestones](https://github.com/paulfurley/encryptit/milestones) for more detail.
+
+
+# Quickstart
 
 ## Install
 
-In a virtualenv:
+It's Python, so you probably want to use a [virtualenv](https://virtualenv.pypa.io/en/latest/), then:
 
-    ```shell
-    mkdir -p ~/venv && virtualenv ~/venv/encryptit
-    pip install encrypit
-    ```
+```sh
+$ pip install encryptit
+```
 
-For your local user only:
+## Decode an OpenPGP binary file
 
-    ```shell
-    pip install --user encryptit
-    ```
+```sh
+# Create an encrypted file with GPG
+$ echo "secret message" | gpg --symmetric /tmp/encrypted.gpg
 
-Globally (not recommended):
+# Decode with encryptit
+$ encryptit dumpjson /tmp/encrypted.gpg
+```
 
-    ```shell
-    sudo pip install encrypit
-    ```
-
-## Dump Packets as JSON
-
-### Python API
-
-    ```python
-    import sys
-    from encryptit.dump_json import dump_stream
-
-    with open('encrypted.gpg', 'rb') as f:
-        dump_stream(f, sys.stdout)
-    ```
-
-### Command-line
-
-    ```shell
-    $ encryptit dumpjson encrypted.gpg
-    ```
-
-### GnuPG Equivalent (ish)
-
-    ```shell
-    $ gpg --list-packets encrypted.json
-    ```
-
-## Encrypt a File
-
-### Python API
-
-    ```python
-    from encryptit import encrypt_symmetric, make_passphrase
-
-    from cleancrypt import encrypt_symmetric, generate_passphrase
-
-    with open('diary.zip', 'rb') as f, open('diary.zip.gpg', 'wb') as g:
-        passphrase = generate_passphrase()
-        openpgp_message = encrypt_symmetric(f.read(), passphrase)
-        g.write(openpgp_message)
-    ```
-
-### Command-line
-
-    ```shell
-    $ encryptit encrypt diary.zip --output diary.zip.gpg
-    ```
-
-### Technical Detail
-
- - `SymmetricKeyEncryptedSessionKeyPacket` with parameters:
-
-   - `SaltedAndIteratedS2K` string-to-key method using SHA1 hash
-   - `AES256` symmetric cipher
-   - empty `encrypted session key` (session key is derived directly from
-     passphrase)
-
- - `SymmetricEncryptedandIntegrityProtectedDataPacket`
-
-### GnuPG equivalent
-
-    ```shell
-    $ gpg --symmetric diary.zip
-    ```
-
-## Decrypt a File
-
-### Python API
-
-    ```python
-    from cleancrypt import decrypt_symmetric
-
-    with open('diary.zip.gpg', 'rb') as f, open('diary.zip', 'wb') as g:
-        passphrase = 'something stronger than this'
-        plaintext = decrypt_symmetric(f.read(), passphrase)
-        g.write(plaintext)
-    ```
-
-### Command-line
-
-    ```shell
-    $ encryptit decrypt diary.zip.gpg --output diary.zip
-    ```
-
-### GnuPG equivalent
-
-    ```shell
-    gpg diary.zip.gpg
-    ```
-
-### Technical Detail
-
-1. Decodes a `SymmetricKeyEncryptedSessionKeyPacket` to derive the session
-2. Decodes and decrypts a `SymmetricallyEncryptedDataPacket` or a
-   `SymmetricEncryptedandIntegrityProtectedDataPacket`
-3. Performs message integrity checking for packet types that support it.
-4. Decodes decrypted `LiteralDataPacket` or `CompressedDataPacket`.
-
-## Current Status (April 2015)
-
-- Alpha (API Design)
-- Active (but part-time) development.
-- **Comments welcome on the API design!**
-
-## Ambition
+## Goals / Ambitions
 
 *To be the cleanest, most testable OpenPGP implementation.*
 
@@ -145,42 +51,8 @@ Globally (not recommended):
 - Extremely high test coverage (at the expense of functionality).
 - [PEP8](https://www.python.org/dev/peps/pep-0008/) compliant.
 
-## Roadmap
 
-- 0.1.0 `dumpjson` tool and API call
-
-  - basic serialisation of *all* packet types
-  - output will improve as packet serialization is extended
-
-- 0.2.0 decode a standard configuration of a symmetrically encrypted file
-
-  - single symmetric passphrase, no asymmetric encryption
-  - `SaltedAndIteratedS2K`
-  - `SHA1` hash.
-  - `AES256` cipher.
-  - `LiteralDataPacket` containing binary data.
-  - Test suite for above packet types.
-
-- 0.3.0 decode all symmetrically encrypted file variations
-
-  - single symmetric passphrase, no asymmetric encryption
-  - all S2K types
-  - all iteration possibilities
-  - all hash algorithms
-  - all ciphers
-  - all data packet types
-  - test suite for above
-
-- 0.4.0 decode symmetrically encrypted file which are also public-key encrypted
-
-  - support file encrypted by 1x passphrase and 1x public key
-
-- ...
-
-- 1.0.0 symmetric encrypt/decrypt API and CLI
-
-
-## Dual License: Affero GNU Public Licence v3
+## Software Licence: GNU Affero Public Licence v3
 
 Copyright (C) 2015 Paul M Furley [paul@paulfurley.com](mailto:paul@paulfurley.com)
 
@@ -188,16 +60,13 @@ Copyright (C) 2015 Paul M Furley [paul@paulfurley.com](mailto:paul@paulfurley.co
 
 [Quick Summary of AGPLv3](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-%28agpl-3.0%29)
 
-**Dual-licensing outside AGPL is possible. Please email me to discuss.**
-
-In order to be reliable, well tested and well supported, all software needs an
-income stream.
+**Proprietary re-licensing may be possible: please [email me to discuss](mailto:paul@paulfurley.com).**
 
 ## Other Python OpenPGP Efforts
 
-EncryptIt focuses on a *well-tested subset* of OpenPGP.
+Currently EncryptIt sacrifices functionality in favour of testing & reliability.
 
-For more funcionality, see these other projects (my initial thoughts included
+For more functionality, see these other projects (my initial thoughts included
 alongside).
 
 Updated 2015-05-02.
@@ -232,6 +101,3 @@ Updated 2015-05-02.
   - No Python 3 support.
   - Source control is mercurial.
   - TODO: PEP8 compliant?
-
-
-
