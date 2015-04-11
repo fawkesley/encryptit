@@ -7,6 +7,17 @@ import os
 import re
 
 
+try:
+    # Workaround for https://bugs.python.org/issue15881#msg170215
+    # See: https://groups.google.com/forum/#!topic/nose-users/fnJ-kAUbYHQ
+    # If this can be removed and the tests pass on Python 2.6, hooray!
+    import multiprocessing
+except ImportError:
+    pass
+else:
+    del multiprocessing
+
+
 def find_version(*file_paths):
     # Open in Latin-1 so that we avoid encoding errors.
     # Use codecs.open for Python 2 compatibility
