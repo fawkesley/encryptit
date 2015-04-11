@@ -1,5 +1,5 @@
 .PHONY: test
-test:
+test: clean
 	nosetests -v
 	./check-pep8.sh
 	./check-todo.sh
@@ -7,6 +7,7 @@ test:
 .PHONY: clean
 clean:
 	find . -iname '*.pyc' -delete
+	find . -name __pycache__ -type d -delete
 	rm -rf openpgp.egg-info
 	rm -rf dist/ MANIFEST
 
