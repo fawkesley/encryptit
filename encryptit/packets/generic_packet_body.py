@@ -1,5 +1,6 @@
 from ..compat import OrderedDict
 from ..stream_utils import read_bytes
+from ..exceptions import MalformedPacketError
 
 from .base_packet_body import BasePacketBody
 
@@ -13,6 +14,11 @@ class GenericPacketBody(BasePacketBody):
 
     @classmethod
     def from_stream(cls, f, body_start, body_length):
+        if body_start < 0:
+            raise ValueError('body_start must be zero or above')
+        if body_length < 1:
+            raise ValueError('body must be at least 1 byte long')
+
         obj = cls()
         obj.f = f
         obj._body_start = body_start
@@ -28,7 +34,7 @@ class GenericPacketBody(BasePacketBody):
     def raw(self):
         self.f.seek(self._body_start)
         # Beware: Now we're loading into memory.
-        return read_bytes(self.f, self._body_length)
+        return read_bytes(self.f, self._body_length, MalformedPacketError)
 
     @property
     def decoded(self):
