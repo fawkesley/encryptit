@@ -48,7 +48,7 @@ def test_non_bytearray_types_raise_type_error():
 
 def assert_raises_for_type(type_):
     data = type_([1, 2, 3, 4])
-    assert_raises(TypeError, lambda: struct_unpack('I', data))
+    assert_raises(TypeError, lambda: struct_unpack('>I', data))
 
 
 def test_disallowed_byte_order_characters():
