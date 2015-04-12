@@ -1,7 +1,7 @@
 """
 Python 2.6 `struct.unpack` differs from 2.7, 3.x as it cannot accept a
 `bytearray` argument. The `bytearray` seems the most portable container
-so the solution here is to provide a Python-2.6 specific wrapper which
+so the solution here is to provide a Python-2.6 specific line which
 converts the `bytearray` into `str`.
 """
 
@@ -14,16 +14,12 @@ def is_version_2_6():
     return major == 2 and minor == 6
 
 
-def _unpack_v26(format_string, byte_array):
+def struct_unpack(format_string, byte_array):
     _validate_byte_array_type(byte_array)
     _validate_format_string(format_string)
 
-    return struct.unpack(format_string, str(byte_array))
-
-
-def _unpack_v27_v3x(format_string, byte_array):
-    _validate_byte_array_type(byte_array)
-    _validate_format_string(format_string)
+    if is_version_2_6():
+        byte_array = str(byte_array)
 
     return struct.unpack(format_string, byte_array)
 
@@ -44,5 +40,3 @@ def _validate_format_string(format_string):
             'Byte order must be specified. See '
             'https://docs.python.org/3/library/struct.html'
             '#byte-order-size-and-alignment')
-
-struct_unpack = _unpack_v26 if is_version_2_6() else _unpack_v27_v3x
