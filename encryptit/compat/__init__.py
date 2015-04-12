@@ -6,3 +6,4 @@ except ImportError:  # Not available on Python 2.6
 
 from .struct_unpack import struct_unpack
 from .abstract_class_method import abstractclassmethod
+from .bytearray_or_str import bytearray_or_str
