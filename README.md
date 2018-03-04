@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/paulfurley/encryptit.svg?branch=master)](https://travis-ci.org/paulfurley/encryptit)
 [![Coverage Status](https://coveralls.io/repos/paulfurley/encryptit/badge.svg)](https://coveralls.io/r/paulfurley/encryptit)
-[![Latest Version](https://pypip.in/version/encryptit/badge.svg)](https://pypi.python.org/pypi/encryptit/)
-[![Supported Python versions](https://pypip.in/py_versions/encryptit/badge.svg)](https://pypi.python.org/pypi/encryptit/)
-[![Development Status](https://pypip.in/status/encryptit/badge.svg)](https://pypi.python.org/pypi/encryptit/)
-[![Supported Python implementations](https://pypip.in/implementation/encryptit/badge.svg)](https://pypi.python.org/pypi/encryptit/)
+[![Latest Version](https://img.shields.io/pypi/v/encryptit.svg)](https://pypi.python.org/pypi/encryptit/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/encryptit.svg)](https://pypi.python.org/pypi/encryptit/)
+[![Development Status](https://img.shields.io/pypi/status/encryptit.svg)](https://pypi.python.org/pypi/encryptit/)
+[![Supported Python implementations](https://img.shields.io/pypi/implementation/encryptit.svg)](https://pypi.python.org/pypi/encryptit/)
 
 ## OpenPGP API and CLI for Python
 
